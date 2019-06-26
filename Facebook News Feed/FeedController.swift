@@ -10,13 +10,20 @@ import UIKit
 
 class FeedController: UICollectionViewController {
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        navigationItem.title = "Facebook Feed"
         
         collectionView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        
     }
-
+    
+    
 
 }
-
+     
