@@ -38,7 +38,7 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 50)
+        return CGSize(width: view.frame.width, height: 60)
     }
 
 }
@@ -59,16 +59,41 @@ class FeedCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "Sample Name"
         label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let profileImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "zuckprofile")
+        image.contentMode = .scaleAspectFit
+        return image
     }()
     
     func setupViews() {
         backgroundColor = .white
         
         addSubview(nameLabel)
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        addSubview(profileImage)
+        
+        addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views: profileImage, nameLabel)
+        addConstraintsWithFormat("V:|[v0]|", views: nameLabel)
+        addConstraintsWithFormat("V:|-8-[v0(44)]", views: profileImage)
+    
+    }
+    
+}
+
+extension UIView {
+    
+    func addConstraintsWithFormat(_ format: String, views: UIView...) {
+        var viewsDictionary = [String: UIView]()
+        for (index, view) in views.enumerated() {
+            let key = "v\(index)"
+            viewsDictionary[key] = view
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: viewsDictionary))
     }
     
 }
