@@ -38,7 +38,7 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 60)
+        return CGSize(width: view.frame.width, height: 300)
     }
 
 }
@@ -83,22 +83,42 @@ class FeedCell: UICollectionViewCell {
         return label
     }()
     
-    let profileImage: UIImageView = {
+    let profileImageView: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "zuckprofile")
         image.contentMode = .scaleAspectFit
         return image
     }()
     
+    let statusTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "Meanwhile, Beast turned in the dark side."
+        textView.font = UIFont.systemFont(ofSize: 14)
+        return textView
+    }()
+    
+    let statusImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "zuckdog")
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
     func setupViews() {
         backgroundColor = .white
         
         addSubview(nameLabel)
-        addSubview(profileImage)
+        addSubview(profileImageView)
+        addSubview(statusTextView)
+        addSubview(statusImageView)
         
-        addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views: profileImage, nameLabel)
-        addConstraintsWithFormat("V:|[v0]|", views: nameLabel)
-        addConstraintsWithFormat("V:|-8-[v0(44)]", views: profileImage)
+        addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views: profileImageView, nameLabel)
+        addConstraintsWithFormat("H:|-4-[v0]-4-|", views: statusTextView)
+        addConstraintsWithFormat("H:|[v0]|", views: statusImageView)
+
+        addConstraintsWithFormat("V:|-12-[v0]", views: nameLabel)
+        addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]|", views: profileImageView, statusTextView, statusImageView)
     
     }
     
