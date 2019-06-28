@@ -57,8 +57,29 @@ class FeedCell: UICollectionViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sample Name"
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.numberOfLines = 2
+        
+        // create attributed text
+        let attributedText = NSMutableAttributedString(string: "Mark Zuckerberg", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+        
+        // append new text
+        attributedText.append(NSAttributedString(string: "\nDecember 18  •  San Francisco  •  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor(red: 155/255, green: 161/255, blue: 171/255, alpha: 1)]))
+        
+        // increase spacing
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 4
+        
+        // add spacing attribute
+        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.count))
+        
+        // attach image
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(named: "globe_small")
+        attachment.bounds = CGRect(x: 0, y: -2, width: 12, height: 12)
+        attributedText.append(NSAttributedString(attachment: attachment))
+        
+        label.attributedText = attributedText
+        
         return label
     }()
     
