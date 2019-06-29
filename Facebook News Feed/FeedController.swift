@@ -63,7 +63,7 @@ class FeedCell: UICollectionViewCell {
         let attributedText = NSMutableAttributedString(string: "Mark Zuckerberg", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
         
         // append new text
-        attributedText.append(NSAttributedString(string: "\nDecember 18  •  San Francisco  •  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor(red: 155/255, green: 161/255, blue: 171/255, alpha: 1)]))
+        attributedText.append(NSAttributedString(string: "\nDecember 18  •  San Francisco  •  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.rgb(155, green: 161, blue: 161)]))
         
         // increase spacing
         let paragraphStyle = NSMutableParagraphStyle()
@@ -105,6 +105,20 @@ class FeedCell: UICollectionViewCell {
         return imageView
     }()
     
+    let likesCommentsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "488 Likes    10.7K Comments"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.rgb(155, green: 161, blue: 171)
+        return label
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.rgb(226, green: 228, blue: 232)
+        return view
+    }()
+    
     func setupViews() {
         backgroundColor = .white
         
@@ -112,14 +126,26 @@ class FeedCell: UICollectionViewCell {
         addSubview(profileImageView)
         addSubview(statusTextView)
         addSubview(statusImageView)
+        addSubview(likesCommentsLabel)
+        addSubview(dividerLineView)
         
         addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views: profileImageView, nameLabel)
         addConstraintsWithFormat("H:|-4-[v0]-4-|", views: statusTextView)
         addConstraintsWithFormat("H:|[v0]|", views: statusImageView)
+        addConstraintsWithFormat("H:|-8-[v0]-8-|", views: likesCommentsLabel)
+        addConstraintsWithFormat("H:|-8-[v0]-8-|", views: dividerLineView)
 
         addConstraintsWithFormat("V:|-12-[v0]", views: nameLabel)
-        addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]|", views: profileImageView, statusTextView, statusImageView)
+        addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-[v4(0.5)]-8-|", views: profileImageView, statusTextView, statusImageView, likesCommentsLabel, dividerLineView)
     
+    }
+    
+}
+
+extension UIColor {
+    
+    static func rgb(_ red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
     
 }
