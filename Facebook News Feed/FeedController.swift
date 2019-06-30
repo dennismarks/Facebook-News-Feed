@@ -8,9 +8,21 @@
 
 import UIKit
 
+let cellId = "cellId"
+
+class Post {
+    var name: String?
+    var profileImageName: String?
+//    var location: String?
+    var statusText: String?
+    var statusImageName: String?
+    var numLikes: Int?
+    var numComments: Int?
+}
+
 class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let cellId = "cellId"
+    var posts = [Post]()
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -18,6 +30,25 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let postMark = Post()
+        postMark.name = "Mark Zuckerberg"
+        postMark.profileImageName = "zuckprofile"
+        postMark.statusText = "Meanwhile, Beast turned in the dark side."
+        postMark.statusImageName = "zuckdog"
+        postMark.numLikes = 510
+        postMark.numComments = 340
+        
+        let postSteve = Post()
+        postSteve.name = "Steve Jobs"
+        postSteve.profileImageName = "steve_profile"
+        postSteve.statusText = "Design is not just what it looks like and feels like. Design is how it works.\n\nBeing the richest man in the cemenery doesn't matter to me. Going to bed at night saying we've done something wonderful, that's what matters to me.\n\nSometimes when you innovate, you make mistakes. It is best to admit them quickly, and get on with improving your other innovations."
+        postSteve.statusImageName = "steve_status"
+        postSteve.numLikes = 670
+        postSteve.numComments = 410
+        
+        posts.append(postMark)
+        posts.append(postSteve)
         
         navigationItem.title = "Facebook Feed"
         
@@ -30,15 +61,28 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCell
+        
+        cell.post = posts[indexPath.item]
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 400)
+        
+        if let statusText = posts[indexPath.item].statusText {
+            let rect = NSString(string: statusText).boundingRect(with: CGSize(width: view.frame.width, height: 1000), options: NSStringDrawingOptions.usesFontLeading.union(NSStringDrawingOptions.usesLineFragmentOrigin), attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14)], context: nil)
+            
+            let knownHeight: CGFloat = 8 + 44 + 4 + 4 + 200 + 8 + 24 + 8 + 44
+            
+            return CGSize(width: view.frame.width, height: rect.height + knownHeight + 18)
+        }
+        
+        return CGSize(width: view.frame.width, height: 500)
     }
     
     // redraw the view when changing the device orientation
@@ -50,6 +94,53 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
 }
      
 class FeedCell: UICollectionViewCell {
+    
+    var post: Post? {
+        didSet {
+            
+            if let name = post?.name {
+                // create attributed text
+                let attributedText = NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+                
+                // append new text
+                attributedText.append(NSAttributedString(string: "\nDecember 18  •  San Francisco  •  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.rgb(155, green: 161, blue: 161)]))
+                
+                // increase spacing
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 4
+                
+                // add spacing attribute
+                attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.count))
+                
+                // attach image
+                let attachment = NSTextAttachment()
+                attachment.image = UIImage(named: "globe_small")
+                attachment.bounds = CGRect(x: 0, y: -2, width: 12, height: 12)
+                attributedText.append(NSAttributedString(attachment: attachment))
+                
+                nameLabel.attributedText = attributedText
+            }
+            
+            if let statusText = post?.statusText {
+                statusTextView.text = statusText
+            }
+            
+            if let profileImageName = post?.profileImageName {
+                profileImageView.image = UIImage(named: profileImageName)
+            }
+            
+            if let statusImageName = post?.statusImageName {
+                statusImageView.image = UIImage(named: statusImageName)
+            }
+            
+            if let likes = post?.numLikes {
+                if let comments = post?.numComments {
+                    likesCommentsLabel.text = "\(likes) Likes    \(comments) Comments"
+                }
+            }
+
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,27 +156,6 @@ class FeedCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 2
         
-        // create attributed text
-        let attributedText = NSMutableAttributedString(string: "Mark Zuckerberg", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
-        
-        // append new text
-        attributedText.append(NSAttributedString(string: "\nDecember 18  •  San Francisco  •  ", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 12), NSAttributedString.Key.foregroundColor: UIColor.rgb(155, green: 161, blue: 161)]))
-        
-        // increase spacing
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-        
-        // add spacing attribute
-        attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedText.string.count))
-        
-        // attach image
-        let attachment = NSTextAttachment()
-        attachment.image = UIImage(named: "globe_small")
-        attachment.bounds = CGRect(x: 0, y: -2, width: 12, height: 12)
-        attributedText.append(NSAttributedString(attachment: attachment))
-        
-        label.attributedText = attributedText
-        
         return label
     }()
     
@@ -100,6 +170,7 @@ class FeedCell: UICollectionViewCell {
         let textView = UITextView()
         textView.text = "Meanwhile, Beast turned in the dark side."
         textView.font = UIFont.systemFont(ofSize: 14)
+        textView.isScrollEnabled = false
         return textView
     }()
     
@@ -113,7 +184,6 @@ class FeedCell: UICollectionViewCell {
     
     let likesCommentsLabel: UILabel = {
         let label = UILabel()
-        label.text = "488 Likes    10.7K Comments"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.rgb(155, green: 161, blue: 171)
         return label
@@ -162,9 +232,9 @@ class FeedCell: UICollectionViewCell {
         addConstraintsWithFormat("H:|-8-[v0]-8-|", views: likesCommentsLabel)
         addConstraintsWithFormat("H:|-8-[v0]-8-|", views: dividerLineView)
         addConstraintsWithFormat("H:|[v0(v2)][v1(v2)][v2]|", views: likeButton, commentButton, shareButton)
-
+        
         addConstraintsWithFormat("V:|-12-[v0]", views: nameLabel)
-        addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-[v4(0.5)][v5(44)]|", views: profileImageView, statusTextView, statusImageView, likesCommentsLabel, dividerLineView, likeButton)
+        addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1]-4-[v2(200)]-8-[v3(24)]-8-[v4(0.5)][v5(44)]|", views: profileImageView, statusTextView, statusImageView, likesCommentsLabel, dividerLineView, likeButton)
         addConstraintsWithFormat("V:[v0(44)]|", views: commentButton)
         addConstraintsWithFormat("V:[v0(44)]|", views: shareButton)
     
