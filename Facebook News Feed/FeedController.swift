@@ -40,6 +40,12 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width, height: 400)
     }
+    
+    // redraw the view when changing the device orientation
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        collectionView.collectionViewLayout.invalidateLayout()
+    }
 
 }
      
@@ -151,17 +157,14 @@ class FeedCell: UICollectionViewCell {
         addSubview(shareButton)
         
         addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views: profileImageView, nameLabel)
-        addConstraintsWithFormat("H:|-3-[v0]-3-|", views: statusTextView)
+        addConstraintsWithFormat("H:|-2-[v0]-2-|", views: statusTextView)
         addConstraintsWithFormat("H:|[v0]|", views: statusImageView)
         addConstraintsWithFormat("H:|-8-[v0]-8-|", views: likesCommentsLabel)
         addConstraintsWithFormat("H:|-8-[v0]-8-|", views: dividerLineView)
-        
-        // button constraints
         addConstraintsWithFormat("H:|[v0(v2)][v1(v2)][v2]|", views: likeButton, commentButton, shareButton)
 
         addConstraintsWithFormat("V:|-12-[v0]", views: nameLabel)
         addConstraintsWithFormat("V:|-8-[v0(44)]-4-[v1(30)]-4-[v2]-8-[v3(24)]-8-[v4(0.5)][v5(44)]|", views: profileImageView, statusTextView, statusImageView, likesCommentsLabel, dividerLineView, likeButton)
-        
         addConstraintsWithFormat("V:[v0(44)]|", views: commentButton)
         addConstraintsWithFormat("V:[v0(44)]|", views: shareButton)
     
