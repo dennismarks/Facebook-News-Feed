@@ -11,6 +11,7 @@
 		843FAA86232455890039B84E /* FeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAA85232455890039B84E /* FeedController.swift */; };
 		843FAA8B2324558A0039B84E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 843FAA8A2324558A0039B84E /* Assets.xcassets */; };
 		843FAA8E2324558A0039B84E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843FAA8C2324558A0039B84E /* LaunchScreen.storyboard */; };
+		843FAA96232606010039B84E /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAA95232606010039B84E /* CustomTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		843FAA8A2324558A0039B84E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		843FAA8D2324558A0039B84E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		843FAA8F2324558A0039B84E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		843FAA95232606010039B84E /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				843FAA83232455890039B84E /* AppDelegate.swift */,
+				843FAA95232606010039B84E /* CustomTabBarController.swift */,
 				843FAA85232455890039B84E /* FeedController.swift */,
 				843FAA8A2324558A0039B84E /* Assets.xcassets */,
 				843FAA8C2324558A0039B84E /* LaunchScreen.storyboard */,
@@ -133,6 +136,7 @@
 			files = (
 				843FAA86232455890039B84E /* FeedController.swift in Sources */,
 				843FAA84232455890039B84E /* AppDelegate.swift in Sources */,
+				843FAA96232606010039B84E /* CustomTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
