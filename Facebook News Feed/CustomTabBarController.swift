@@ -18,7 +18,7 @@ class CustomTabBarController: UITabBarController {
         navigationController.title = "News Feed"
         navigationController.tabBarItem.image = UIImage(named: "news_feed_icon")
         
-        let friendRequestsController = UIViewController()
+        let friendRequestsController = FriendsRequestController()
         let secondNavigationController = UINavigationController(rootViewController: friendRequestsController)
         secondNavigationController.title = "Requests"
         secondNavigationController.tabBarItem.image = UIImage(named: "requests_icon")

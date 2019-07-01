@@ -12,6 +12,7 @@
 		843FAA8B2324558A0039B84E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 843FAA8A2324558A0039B84E /* Assets.xcassets */; };
 		843FAA8E2324558A0039B84E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843FAA8C2324558A0039B84E /* LaunchScreen.storyboard */; };
 		843FAA96232606010039B84E /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAA95232606010039B84E /* CustomTabBarController.swift */; };
+		843FAA9823260D820039B84E /* FriendRequestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843FAA9723260D820039B84E /* FriendRequestController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		843FAA8D2324558A0039B84E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		843FAA8F2324558A0039B84E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		843FAA95232606010039B84E /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		843FAA9723260D820039B84E /* FriendRequestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				843FAA83232455890039B84E /* AppDelegate.swift */,
 				843FAA95232606010039B84E /* CustomTabBarController.swift */,
+				843FAA9723260D820039B84E /* FriendRequestController.swift */,
 				843FAA85232455890039B84E /* FeedController.swift */,
 				843FAA8A2324558A0039B84E /* Assets.xcassets */,
 				843FAA8C2324558A0039B84E /* LaunchScreen.storyboard */,
@@ -135,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				843FAA86232455890039B84E /* FeedController.swift in Sources */,
+				843FAA9823260D820039B84E /* FriendRequestController.swift in Sources */,
 				843FAA84232455890039B84E /* AppDelegate.swift in Sources */,
 				843FAA96232606010039B84E /* CustomTabBarController.swift in Sources */,
 			);
