@@ -19,8 +19,10 @@ class FriendsRequestController: UITableViewController {
         self.navigationItem.title = "Friend Requests"
         
         tableView.sectionHeaderHeight = 26
+        tableView.separatorColor = UIColor.rgb(229, green: 231, blue: 235)
         
         tableView.register(FriendRequestHeader.self, forHeaderFooterViewReuseIdentifier: headerId)
+        tableView.register(FriendRequestCell.self, forCellReuseIdentifier: cellId)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -81,6 +83,70 @@ class FriendRequestHeader: UITableViewHeaderFooterView {
         addConstraintsWithFormat("H:|[v0]|", views: bottomBorderWidth)
         
         addConstraintsWithFormat("V:|[v0][v1(0.5)]|", views: nameLabel, bottomBorderWidth)
+        
+    }
+    
+}
+
+class FriendRequestCell: UITableViewCell {
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    let profileImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "zuckprofile")
+        return imageView
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Sample Name"
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    
+    let confirmButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Confirm", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 10)
+        button.backgroundColor = UIColor.rgb(87, green: 143, blue: 255)
+        button.layer.cornerRadius = 2
+        return button
+    }()
+    
+    let deleteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Delete", for: .normal)
+        button.setTitleColor(UIColor(white: 0.3, alpha: 1), for: .normal)
+        button.layer.cornerRadius = 2
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor(white: 0.7, alpha: 1).cgColor
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 10)
+        return button
+    }()
+    
+    func setupViews() {
+        
+        addSubview(profileImage)
+        addSubview(nameLabel)
+        addSubview(confirmButton)
+        addSubview(deleteButton)
+        
+        addConstraintsWithFormat("H:|-16-[v0(52)]-8-[v1]|", views: profileImage, nameLabel)
+        addConstraintsWithFormat("H:|-76-[v0(80)]-8-[v1(80)]", views: confirmButton, deleteButton)
+        
+        addConstraintsWithFormat("V:|-4-[v0]-4-|", views: profileImage)
+        addConstraintsWithFormat("V:|-8-[v0]-8-[v1(24)]-8-|", views: nameLabel, confirmButton)
+        addConstraintsWithFormat("V:[v0(24)]-8-|", views: deleteButton)
         
     }
     
