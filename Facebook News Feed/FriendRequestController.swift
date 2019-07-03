@@ -38,7 +38,21 @@ class FriendsRequestController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell =  tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! FriendRequestCell
+        
+        if indexPath.row % 3 == 0 {
+            cell.nameLabel.text = "Mark Zuckerberg"
+            cell.profileImage.image = UIImage(named: "zuckprofile")
+        } else if indexPath.row % 3 == 1 {
+            cell.nameLabel.text = "Steve Jobs"
+            cell.profileImage.image = UIImage(named: "steve_profile")
+        } else {
+            cell.nameLabel.text = "Mahatma Gandhi"
+            cell.profileImage.image = UIImage(named: "gandhi_profile")
+        }
+        
+        cell.imageView?.backgroundColor = UIColor.black
+        
         return cell
     }
     
