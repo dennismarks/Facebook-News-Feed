@@ -68,6 +68,7 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FeedCell
         
         cell.post = posts[indexPath.item]
+        cell.feedController = self
         
         return cell
     }
@@ -91,10 +92,40 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
         super.viewWillTransition(to: size, with: coordinator)
         collectionView.collectionViewLayout.invalidateLayout()
     }
+    
+    func animateImageView(statusImageView: UIImageView) {
+        if let startingFrame = statusImageView.superview?.convert(statusImageView.frame, to: nil) {
+            
+            statusImageView.alpha = 0
+            
+            let zoomImageView = UIImageView()
+            zoomImageView.backgroundColor = .red
+            zoomImageView.frame = startingFrame
+            zoomImageView.isUserInteractionEnabled = true
+            zoomImageView.image = statusImageView.image
+            zoomImageView.contentMode = .scaleAspectFill
+            zoomImageView.clipsToBounds = true
+            view.addSubview(zoomImageView)
+            
+            UIView.animate(withDuration: 0.75) {
+                let height = (self.view.frame.width  * startingFrame.height) / startingFrame.width
+                let y = self.view.frame.height / 2 - height / 2
+                zoomImageView.frame = CGRect(x: 0, y: y, width: self.view.frame.width, height: height)
+            }
+        }
+    }
+    
+    
 
 }
      
 class FeedCell: UICollectionViewCell {
+    
+    var feedController: FeedController?
+    
+    @objc func animate() {
+        feedController?.animateImageView(statusImageView: statusImageView)
+    }
     
     var post: Post? {
         didSet {
@@ -180,6 +211,7 @@ class FeedCell: UICollectionViewCell {
         imageView.image = UIImage(named: "zuckdog")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -226,6 +258,8 @@ class FeedCell: UICollectionViewCell {
         addSubview(likeButton)
         addSubview(commentButton)
         addSubview(shareButton)
+        
+        statusImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(animate)))
         
         addConstraintsWithFormat("H:|-8-[v0(44)]-8-[v1]|", views: profileImageView, nameLabel)
         addConstraintsWithFormat("H:|-2-[v0]-2-|", views: statusTextView)
