@@ -93,11 +93,15 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
+    let zoomImageView = UIImageView()
     let blackBackgroundView = UIView()
     
+    var statusImageView: UIImageView?
+    
     func animateImageView(statusImageView: UIImageView) {
+        self.statusImageView = statusImageView
+        
         if let startingFrame = statusImageView.superview?.convert(statusImageView.frame, to: nil) {
-            
             statusImageView.alpha = 0
             
             blackBackgroundView.frame = self.view.frame
@@ -105,7 +109,6 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
             blackBackgroundView.alpha = 0
             view.addSubview(blackBackgroundView)
             
-            let zoomImageView = UIImageView()
             zoomImageView.backgroundColor = .red
             zoomImageView.frame = startingFrame
             zoomImageView.isUserInteractionEnabled = true
@@ -114,13 +117,28 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
             zoomImageView.clipsToBounds = true
             view.addSubview(zoomImageView)
             
-            UIView.animate(withDuration: 0.75) {
+            zoomImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(zoomOut)))
+            
+            UIView.animate(withDuration: 0.5) {
                 
                 self.blackBackgroundView.alpha = 1
                 
                 let height = (self.view.frame.width  * startingFrame.height) / startingFrame.width
                 let y = self.view.frame.height / 2 - height / 2
-                zoomImageView.frame = CGRect(x: 0, y: y, width: self.view.frame.width, height: height)
+                self.zoomImageView.frame = CGRect(x: 0, y: y, width: self.view.frame.width, height: height)
+            }
+        }
+    }
+    
+    @objc func zoomOut() {
+        if let startingFrame = statusImageView!.superview?.convert(statusImageView!.frame, to: nil) {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.zoomImageView.frame = startingFrame
+                self.blackBackgroundView.alpha = 0
+            }) { (didComplete) in
+                self.zoomImageView.removeFromSuperview()
+                self.blackBackgroundView.removeFromSuperview()
+                self.statusImageView?.alpha = 1
             }
         }
     }
