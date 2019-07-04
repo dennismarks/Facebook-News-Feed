@@ -93,10 +93,17 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
         collectionView.collectionViewLayout.invalidateLayout()
     }
     
+    let blackBackgroundView = UIView()
+    
     func animateImageView(statusImageView: UIImageView) {
         if let startingFrame = statusImageView.superview?.convert(statusImageView.frame, to: nil) {
             
             statusImageView.alpha = 0
+            
+            blackBackgroundView.frame = self.view.frame
+            blackBackgroundView.backgroundColor = .black
+            blackBackgroundView.alpha = 0
+            view.addSubview(blackBackgroundView)
             
             let zoomImageView = UIImageView()
             zoomImageView.backgroundColor = .red
@@ -108,6 +115,9 @@ class FeedController: UICollectionViewController, UICollectionViewDelegateFlowLa
             view.addSubview(zoomImageView)
             
             UIView.animate(withDuration: 0.75) {
+                
+                self.blackBackgroundView.alpha = 1
+                
                 let height = (self.view.frame.width  * startingFrame.height) / startingFrame.width
                 let y = self.view.frame.height / 2 - height / 2
                 zoomImageView.frame = CGRect(x: 0, y: y, width: self.view.frame.width, height: height)
