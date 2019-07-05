@@ -13,7 +13,6 @@ let cellId = "cellId"
 class Post {
     var name: String?
     var profileImageName: String?
-//    var location: String?
     var statusText: String?
     var statusImageName: String?
     var numLikes: Int?
